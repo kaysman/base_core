@@ -57,6 +57,18 @@ class ActivityIndicator extends Stream<bool> implements ValueStream<bool> {
       return null;
     }
   }
+
+  @override
+  StreamNotification<bool>? get lastEventOrNull {
+    final lastCounterEvent = _loadingCounter.lastEventOrNull;
+    final lastValue = lastCounterEvent?.dataValueOrNull;
+
+    if (lastValue != null) {
+      return StreamNotification.data(lastValue > 0);
+    }
+
+    return null;
+  }
 }
 
 class _ActivityIndicatorTransformer<T> extends StreamTransformerBase<T, T> {
